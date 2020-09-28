@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit user</title>
+</head>
+<body>
+<p>adding user</p>
+
+<!--<form th:action="@{/admin/users/new}" th:object="${user}" method="post">-->
+<!--    <input type="text" name="name" th:field="*{name}">-->
+<!--    <input type="email" name="email" th:field="*{email}">-->
+<!--    <input type="text" name="role" th:field="*{email}">-->
+<!--    <select th:field="*{roles}">-->
+<!--        <option th:each="role : ${allRoles}"-->
+<!--                th:value="default"-->
+<!--                th:text="#{${role}}" th:field="*{roles}"></option>-->
+<!--    </select>-->
+<!--    <input type="submit" value="создать">-->
+<!--</form>-->
+
+<form th:action="@{/admin/users/new}" th:object="${user}" method="post">
+    <input type="hidden" name="id" th:value="*{id}">
+    <span th:text="*{id}"/>
+    <label for="name">name</label>
+    <input id="name" type="text" name="name" th:value="*{name}">
+    <label for="email">email</label>
+    <input id="email" type="email" name="email" th:value="*{email}">
+    <label for="password">parol</label>
+    <input id="password" type="password" name="password" th:value="*{password}">
+    <input type="submit" value="Изменить">
+    <label for="roles">РОЛИ</label>
+    <select id="roles" multiple class="form-control " th:field="*{roles}">
+        <option th:each="role : ${allRoles}"
+                th:value="${role}"
+                th:text="${role}"></option>
+    </select>
+
+</form>
+
+</body>
+</html>
