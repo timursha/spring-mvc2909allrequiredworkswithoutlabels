@@ -17,6 +17,20 @@
 <br>
 <a th:href="@{/admin/users/new}" th:text="добавить">user</a>
 
+<form th:action="@{/admin/users/new}" th:object="${user}" method="post">
+    <input type="text" name="name" th:field="*{name}">
+    <input type="email" name="email" th:field="*{email}">
+    <input type="text" name="role" th:field="*{role}">
+    <label for="roles">РОЛИ</label>
+    <select id="roles" multiple class="form-control " th:field="*{roles}">
+        <option th:each="role : ${allRoles}"
+                th:value="${role}"
+                th:text="${role}"></option>
+    </select>
+
+
+    <input type="submit" value="создать">
+</form>
 
 </body>
 </html>

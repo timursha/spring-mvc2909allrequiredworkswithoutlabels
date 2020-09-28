@@ -4,31 +4,36 @@ import org.hibernate.annotations.ManyToAny;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column
-    String role;
+    private String role;
 
-    public Role(long id, String role, Set<User> users) {
-        this.id = id;
+    public Role( String role) {
+        if (role.contains("ROLE_ADMIN")) {
+            this.id = 1L;
+        } else if (role.contains("ROLE_USER")) {
+            this.id = 2L;
+        }
         this.role = role;
-        this.users = users;
     }
-
+    @Transient
     @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
+    private List<User> users;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -43,14 +48,6 @@ public class Role implements GrantedAuthority {
         this.role = role;
     }
 
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
-
     @Override
     public String getAuthority() {
         return role;
@@ -58,10 +55,6 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String toString() {
-        return "Role{" +
-                "id=" + id +
-                ", name='" + role + '\'' +
-                ", users=" + users +
-                '}';
+        return role;
     }
 }
