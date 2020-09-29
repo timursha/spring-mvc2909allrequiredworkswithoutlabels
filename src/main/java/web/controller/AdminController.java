@@ -1,19 +1,13 @@
 package web.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import web.dao.RoleDao;
 import web.models.Role;
 import web.models.User;
 import web.service.UserService;
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,22 +16,26 @@ public class AdminController {
 
 	private  UserService userServiceEntityImpl;
 
-
 	public AdminController(UserService userServiceEntityImpl) {
 		this.userServiceEntityImpl = userServiceEntityImpl;
 	}
 
-	@GetMapping(value = {"admin/users","/"})
+	@GetMapping("/")
+	public String redirect(){
+		return "redirect:/admin/users/";
+	}
+
+	@GetMapping(value = {"admin/users"})
 	public String indexUsers(Model model){
 		model.addAttribute("users", userServiceEntityImpl.listUsers());
-		// getting all users
-//		List<Role> rolesList = new ArrayList<>();
-//		rolesList.add(new Role("ROLE_ADMIN"));
-//		rolesList.add(new Role("ROLE_USER"));
-//		userServiceEntityImpl.saveRoles(rolesList);
-//		User user = new User("Ivan", "abc@mail.ru");
-//		user.setRoles(rolesList);
 		return "index_users";
+	}
+
+	@GetMapping("/admin")
+	public String adminPage(Model model) {
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		model.addAttribute("user", userDetails);
+		return "admin";
 	}
 
 	@GetMapping("admin/users/remove/{id}")
@@ -63,19 +61,17 @@ public class AdminController {
 	}
 
 	@GetMapping("/admin/users/new")
-		public String create(Model model){
+	public String create(Model model){
 		List<Role> rolesList = new ArrayList<>();
 		rolesList.add(new Role("ROLE_ADMIN"));
 		rolesList.add(new Role("ROLE_USER"));
 		model.addAttribute("allRoles", userServiceEntityImpl.getAllRoles());
 		model.addAttribute("user", new User());
-			return "new";
-		}
-
+		return "new";
+	}
 
 	@PostMapping("admin/users/new")
 	public String create(@ModelAttribute("user") User user){
-
 		userServiceEntityImpl.addUser(user);
 		return "redirect:/admin/users";
 	}

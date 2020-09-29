@@ -18,11 +18,8 @@ public class UserDaoEntityImpl implements UserDao{
     @Transactional
     @Override
     public void addUser(User user) {
-//    user.setRoles(new HashSet<>(Arrays.asList(roleDao.getOne(2L))));
-//        entityManager.persist(user);
         entityManager.persist(user);
     }
-
     @Transactional
     @Override
     public void updateUser(User user) {
@@ -61,32 +58,4 @@ public class UserDaoEntityImpl implements UserDao{
     }
 
 }
-
-
-
-
-
-
-
-
-//    private static int STATIC_COUNT;
-//    private List<User> users;
-//    {
-//        users = new ArrayList<>();
-//        users.add(new User(++STATIC_COUNT, "Ivan", "abc@mail.ru"));
-//        users.add(new User(++STATIC_COUNT, "Fedya", "deg@mail.ru"));
-//        users.add(new User(++STATIC_COUNT, "Vasya", "ign@mail.ru"));
-//    }
-//
-//    public List<User> index(){
-//        return users;
-//    }
-//    public User show(int id){
-//        return users.stream().filter(user -> user.getId() == id).findAny().orElse(null);
-//    }
-//
-//    public void save(User user){
-//        user.setId(++STATIC_COUNT);
-//        users.add(user);
-//    }
 

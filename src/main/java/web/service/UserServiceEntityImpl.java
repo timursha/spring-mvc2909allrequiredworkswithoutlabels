@@ -13,7 +13,6 @@ import web.models.User;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class UserServiceEntityImpl implements UserService, UserDetailsService {
@@ -80,7 +79,8 @@ public class UserServiceEntityImpl implements UserService, UserDetailsService {
         rolesList.add(new Role("ROLE_ADMIN"));
         rolesList.add(new Role("ROLE_USER"));
         this.saveRoles(rolesList);
-        User user = new User("Ivan", "abc@mail.ru");
+        User user = new User("admin", "admin@admin.ru");
+        user.setPassword("admin");
         user.setRoles(rolesList);
         this.updateUser(user);
     }

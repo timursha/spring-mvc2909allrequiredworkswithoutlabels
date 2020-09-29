@@ -5,32 +5,34 @@
     <title>Все Юзеры</title>
 </head>
 <body>
-<p>все юзеры:</p>
-<!--<tr th:if="${users.empty}">-->
-<!--    <td colspan="2"> No Users Available </td>-->
-<!--</tr>-->
-<div th:each="user : ${users}">
-    <a th:href="@{/admin/users/edituser/{id}(id=${user.getId()})}" th:text="${user.getName()}">user</a>
-    <a th:href="@{/admin/users/edituser/{id}(id=${user.getId()})}" th:text="изменить">изменить</a>
-    <a th:href="@{/admin/users/remove/{id}(id=${user.getId()})}" th:text="удалить">user</a>
-</div>
-<br>
-<a th:href="@{/admin/users/new}" th:text="добавить">user</a>
+    <h2>все юзеры:</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>change</th>
+            <th>delete</th>>
+        </tr>
+        </thead>
+        <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.roles}"></td>
+        <td><a th:href="@{/admin/users/edituser/{id}(id=${user.getId()})}" th:text="изменить">добавить</a></td>
+        <td><a th:href="@{/admin/users/remove/{id}(id=${user.getId()})}" th:text="удалить">user</a></td>
 
-<form th:action="@{/admin/users/new}" th:object="${user}" method="post">
-    <input type="text" name="name" th:field="*{name}">
-    <input type="email" name="email" th:field="*{email}">
-    <input type="text" name="role" th:field="*{role}">
-    <label for="roles">РОЛИ</label>
-    <select id="roles" multiple class="form-control " th:field="*{roles}">
-        <option th:each="role : ${allRoles}"
-                th:value="${role}"
-                th:text="${role}"></option>
-    </select>
-
-
-    <input type="submit" value="создать">
-</form>
-
+    </tr>
+        </tbody>
+    </table>
+        <br>
+        <a th:href="@{/admin/users/new}" th:text="добавить">user</a>
+    <form th:action="@{/admin/users/new}" th:object="${user}" method="post">
+    </form>
+    <button type="button"><a href="/logout">logout</a></button>
 </body>
 </html>

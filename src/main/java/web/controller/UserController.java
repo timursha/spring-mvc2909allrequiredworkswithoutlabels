@@ -16,8 +16,6 @@ public class UserController {
         this.userServiceEntityImpl = userServiceEntityImpl;
     }
 
-
-
     @GetMapping("/user")
     public String homePage(Model model) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

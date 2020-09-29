@@ -5,8 +5,7 @@
     <title>Edit user</title>
 </head>
 <body>
-<p>edit user</p>
-
+<h2>edit user</h2>
 <form th:action="@{/admin/users/edituser}" th:object="${edituser}" method="post">
     <input type="hidden" name="id" th:value="*{id}">
     <span th:text="*{id}"/>
@@ -23,7 +22,6 @@
                           th:value="${role}"
                           th:text="${role}"></option>
               </select>
-
 </form>
 </body>
 </html>
